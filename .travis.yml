@@ -1,0 +1,36 @@
+language: java
+
+cache:
+  directories:
+  - $HOME/.m2
+
+jdk:
+  - oraclejdk8
+  - oraclejdk10
+  - openjdk8
+
+matrix:
+  include:
+    - jdk: openjdk10
+      before_install:
+        - java -version
+        - mvn --version
+        - rm "${JAVA_HOME}/lib/security/cacerts"
+        - ln -s /etc/ssl/certs/java/cacerts "${JAVA_HOME}/lib/security/cacerts"
+
+before_install:
+  - java -version
+  - mvn --version
+
+install:
+  - mvn -s conf/settings.xml install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+
+notifications:
+  webhooks:
+    urls:
+      - https://webhooks.gitter.im/e/029aeea7192da947a226
+    on_success: change
+    on_failure: always
+    on_start: never
+    on_cancel: always
+    on_error: always

@@ -1,156 +1,309 @@
-SilkSpawners - harvest mob spawners with silk touch
+# SilkSpawners
+[![Build Status](https://ci.dustplanet.de/job/SilkSpawners/badge/icon)](https://ci.dustplanet.de/job/SilkSpawners/)
+[![Build Status](https://travis-ci.org/timbru31/SilkSpawners.svg?branch=master)](https://travis-ci.org/timbru31/SilkSpawners)
+[![Build status](https://ci.appveyor.com/api/projects/status/3uvrma09rul7myk5?svg=true)](https://ci.appveyor.com/project/timbru31/silkspawners)
 
-Ever wanted to move a mob spawner? With SilkSpawners, you can now pick up and move monster spawners using tools with the "silk touch" enchantment.
+[![BukkitDev](https://img.shields.io/badge/BukkitDev-v5.0.2-orange.svg)](https://dev.bukkit.org/projects/silkspawners/)
+[![SpigotMC](https://img.shields.io/badge/SpigotMC-v5.0.2-orange.svg)](https://www.spigotmc.org/resources/7811/)
 
-**[Download SilkSpawners 2.0.2](http://dev.bukkit.org/server-mods/silkspawners/files/16-silk-spawners-2-0-2/)** - released 2012/07/04
+[![License](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-blue.svg)](LICENSE.md)
 
-Features:
-
-* Spawner retains creature type
-* Works on legit spawners
-* Optional showing of creature type when spawners are placed or broken
-* Optional /spawner command to view creature type of spawner you are looking at 
-* Optional /spawner [creature] to change an existing spawner in the world, if in your crosshairs
-* Optional /spawner [creature] to put a new spawner item in your empty hand
-* Optional /spawner [creature]egg to put a new spawn egg in your empty hand
-* Optional crafting of spawners using monster eggs + eight iron bars ([as seen here](http://imgur.com/KrWGI), [source](http://www.reddit.com/r/Minecraft/comments/oodql/great_idea_mob_spawner_recipe/)) 
-* Optional left-click spawner with spawn egg to change type (ops only by default)
-* Optional changing spawner type with spawn egg (either consuming or not consuming egg)
-* Optional permissions support
-* Optional support for custom mobs added by client/server mods
-* Optional support for spawning any entity with spawn eggs (dragons, non-creature entities, etc.)
-* Optional support for dumping entity ID map on startup for debugging mods
-* Compatible with CraftBukkit++ (see spawnersUnstackable)
-* Compatible with MCPC and ported mods (auto-detects IDs)
-* Compatible with Not Enough Items (newer builds only)
-* Compatible with Spout (optional)
+## Info
+This CraftBukkit plugin adds a way to obtain the spawner with the corresponding mob when mined with SilkTouch and offers a various range of changing spawners.
+* Crafting of each spawner (own recipe for every mob if wanted)
+* Commands for player and console
+* Changing spawners with spawn eggs
+* Permissions support or OP fallback
+* Support for
+  * **Custom mobs** added by client/server mods
+  * Spawning any entity with spawn eggs (dragons, non-creature entities, etc.)
+* Compatible with
+  * CraftBukkit++ and Spigot (see spawnersUnstackable)
+  * MCPC(+) and ported mods (auto-detects IDs)
 * Flexible creature type names on input (pigman, zombiepigman, pigzombie, etc. all accepted), official names on output (Magma Cube, not "LavaSlime")
+* Localization
+* Economy addon [SilkSpawnersEcoAddon](https://dev.bukkit.org/projects/silkspawnersecoaddon)
+* Shop addon [SilkSpawnersShopAddon](https://spigotmc.org/resources/12028/) (login required, Premium Plugin)
+* BossBarAPI support for >= 1.9, otherwise BarAPI can be used
+* Support for multiple Minecraft versions, from 1.7.X to 1.13.1
 
-## Usage
-Acquire a tool with Silk Touch, break a mob spawner using said tool, place the spawner. Your spawner has now been moved. 
+*Third party features, all of them can be disabled*
+* bStats for usage statistics
+* Auto Updater (connecting to https://dev.bukkit.org for updating checking)
 
-Many additional features can be enabled if desired, see below.
+## License
+This plugin is released under the
+*Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)* license.
+Please see [LICENSE.md](LICENSE.md) for more information.
 
-[Forum thread](http://forums.bukkit.org/threads/mech-fix-info-admn-silkspawners-v1-0-harvest-mob-spawners-1-1-r4.59077/)
+## Standard config
+```yaml
+# See documentation at https://dev.bukkit.org/projects/silkspawners/pages/configuration
 
-## Configuration
-*usePermissions* (false) - Whether to use Bukkit's superperms system, or the defaults below.
+# Should the plugin automatically update if an update is available?
+autoUpdater: true
 
-*useWorldGuard* (true) - Whether to use [WorldGuard](http://dev.bukkit.org/server-mods/worldguard/) protection, if present.
+# Should a permission be required when a spawner explodes by TNT to achieve a drop
+permissionExplode: false
 
-*minSilkTouchLevel* (1) - Minimum enchantment level required for Silk Touch to harvest spawners. Normally Silk Touch I is required, but you can set this to 0 to make no enchantment required, or 2+ to require non-standard (normally unobtainable) enchantments.
+# Should be checked for WorldGuard build ability to change spawners
+useWorldGuard: true
 
-*destroyDropEgg* (false) - Whether to give a spawn egg when spawner is destroyed without Silk Touch.
+# Percentage of dropping a spawner block when TNT or creepers explode
+explosionDropChance: 30
 
-*destroyDropXP* (0) - Experience points to drop when spawner is destroyed.
+# Percentage of dropping a iron bars when a spawner is mined
+destroyDropChance: 100
 
-*destroyDropBars* (0) - Iron bars to drop when spawner is destroyed.
+# Percentage of dropping an egg when a spawner is mined
+eggDropChance: 100
 
-*ignoreFakeBreakEvents* (true) - Ignore subclassed spawner block break events sent by other plugins (such as mcMMO with superbreaker).
+# Percentage of dropping the spawner when mined
+silkDropChance: 100
 
-*denyBreakHoldingSpawner* (true) - Deny players from breaking blocks while holding mob spawners, to prevent silk touch exploit.
+# When generic spawner items are placed, spawn this creature (e.g. from /give or other plugins)
+# PIG (90) is Minecraft default (put NAMES or IDs here!)
+defaultCreature: 90
 
-*consumeEgg* (true) - Consume spawn eggs used to change spawners, or otherwise keep the egg in the player's inventory.
+# How far is the spawner reachable with your crosshair (disable with -1)
+spawnerCommandReachDistance: 6
 
-*useReflection* (true) - Use reflection to get/set mob IDs, or otherwise use Bukkit's wrapper. Required for custom mobs.
+# Minimum silk touch level [can be changed via other plugins to a higher value]
+# Set it to 0 to mine it without silk touch
+minSilkTouchLevel: 1
 
-*spawnEggOverride* (false) - Override CraftBukkit's spawn egg routine and allow you to spawn [any entity](http://www.minecraftwiki.net/wiki/Data_values#Entity_IDs) whatsoever by right-clicking the appropriate spawn eggs -- any entity is allowed, including enderdragons, ender crystals, primed TNT, boats, or even invalid entities, so be careful (note that SilkSpawners won't give you an egg for any item using /ss if it isn't in the config) -- although IDs can be disabled with the option below. Mainly intended for testing purposes, or if you want to spawn modded items not recognized by CraftBukkit.
+# If a player in creative destroys a spawner nothing is dropped
+noDropsCreative: true
 
-*spawnEggOverrideSpawnDefault* (true) - If no *enableSpawnEggOverrideAllowSpawn* is given per-creature, use this instead.
+# If a spawner is destroyed, should the egg be dropped
+destroyDropEgg: false
 
-*enableCreatureDefault* (true) - If no *enable* is given per-creature, use this instead.
+# If a spawner is destroyed, should XP be dropped
+destroyDropXP: 0
 
-*verboseConfig* (false) - Log verbose configuration information on load.
+# If a spawner is mined, should it be directly added to the inventory of the player
+dropSpawnerToInventory: false
 
-*spawnerCommandReachDistance* (6) - How close you have to be to use the /spawner command.
+# Amount of spawners to be dropped when mined with valid silk touch
+dropAmount: 1
 
-*craftableSpawners* (false) - Enable crafting mob spawners using spawner egg in center surrounded by 8 iron bars.  Once enabled, crafting spawners for individual creatures can be disabled by setting *enableCraftingSpawner* to false in the *creatures* section below (if omitted, will default to true, but both config options must be enabled for spawners to be craftable).
+# Flag a spawner as already mined to prevent XP duping
+preventXPFarming: true
 
-*useSpout* (true) - Set to false to not use Spout features even if Spout plugin is present. If Spout is not detected, this option has no effect.
+# Drops XP only when a spawner is destroyed and not mined via SilkTouch
+dropXPOnlyOnDestroy: false
 
-*notifyOnClick* (true) - Whether to notify a player the spawner type when clicking a spawner in inventory.
+# If a spawner is destroyed, should iron bars be dropped
+destroyDropBars: 0
+ 
+# Should the player be able to craft spawners
+craftableSpawners: false
 
-*notifyOnHold* (true) - Whether to notify a player the spawner type when holding a spawner.
+# Leave a slot empty (null/air)? Just make a space then, example 'A A' -> middle is free
+# X is always the egg
+recipeTop: AAA
+recipeMiddle: AXA
+recipeBottom: AAA
+recipeAmount: 1
 
-*spawnersUnstackable* (false) - Prevent spawners from stacking, by setting max stack size to 1. Useful on CraftBukkit++ to prevent spawners from stacking when dropped as items. Not needed on vanilla CraftBukkit builds.
+# Custom example:
+#recipeTop: 'A A'
+#recipeMiddle: 'BXA'
+#recipeBottom: 'C D'
+#ingredients:
+#  - 'A,IRON_FENCE'
+#  - 'B,DIRT'
+#  - 'C,2'
+#  - 'D,5'
 
-*defaultCreature* (null) - When generic spawner items are placed, spawn this creature (or null for Minecraft's default, pigs).
+# You can put IDs or the NAME here (please uppercase)
+# Add it for each custom ingredient you add, too!
+ingredients:
+- A,IRON_FENCE
 
-All spawner items obtained using SilkSpawners will have the creature type stored, but the default creature will be used if the spawner is obtained using:
+# Should spawners be unstackable
+spawnersUnstackable: false
 
-* /give player 52
-* 1.9 beta pre-release 6 silk touch
-* other plugins not knowledgeable of SilkSpawners' conventions
+# Should the egg be consumed when the spawner is changed with it
+consumeEgg: true
 
+# Fallback if the creature should be enabled, if not specified for the entity
+enableCreatureDefault: true
 
-*creatures* - Mapping between internal mob ID string for spawners, and other crucial information. Keys include:
+# Should numbers be ignored (on eggs) and allow every number value?
+ignoreCheckNumbers: false
 
-*creatures.X.aliases*: An optional list of aliases to recognize as alternate names for the mob.
+# Disable left click to change spawners, spawns a mob instead. Still blocks Vanilla right click behavior.
+disableChangeTypeWithEgg: false
 
-*creatures.X.displayName*: The human-readable name of the mob.
+# Should instead of spawning a mob a MonsterSpawner be placed? (Uses consumeEgg value, too)
+spawnEggToSpawner: false
 
-*creatures.X.enable* (true): If false, this entity is skipped entirely and not recognized by SilkSpawners.  Useful to exclude non-mob entities.  If this key is missing, *enableCreatureDefault* will be checked instead.  Note that entities not auto-detected are always skipped, so this key is safe to leave false for entities for mods you don't have installed.
+# Should the spawn algorithm be overridden? Allows spawning of non-standard entities
+spawnEggOverride: false
 
-*creatures.X.enableCraftingSpawner* (true): If *craftableSpawners* is enabled (see above), then a crafting recipe will be enabled for this mob unless this config option is false.
+# Fallback if the creature should be spawned, if not specified for the entity
+spawnEggOverrideSpawnDefault: true
 
-*creatures.X.enableSpawnEggOverrideAllowSpawn* (true): If *spawnEggOverride* is enabled, allow spawn eggs to be used for this creature. Set to false to block spawn eggs. If this key is missing, *spawnEggOverrideSpawnDefault* will be checked instead.  Note that if *spawnEggOverride* is disabled, this option has no effect.
+# Allowed set of tools which can mine a spawner. IDs are supported, too
+allowedTools:
+- WOOD_PICKAXE
+- STONE_PICKAXE
+- IRON_PICKAXE
+- GOLD_PICKAXE
+- DIAMOND_PICKAXE
+
+# Amount of spawners or eggs given to a player when the argument is omitted
+defaultAmountGive: 1
+
+# Notify the player about the spawner when he clicks it in the inventory
+notifyOnClick: true
+
+# Notify the player about the spawner when he holds the spawner in the hand
+notifyOnHold: true
+
+# Configure displaying with BarAPI, time is in seconds
+barAPI:
+  enable: false
+  displayTime: 3
+
+# Configure displaying with 1.9 BossBarApi, time is in seconds
+vanillaBossBar:
+  enable: true
+  displayTime: 3
+
+  # Valid colors are BLUE, GREEN, PINK, PURPLE, RED, WHITE, YELLOW
+  color: RED
+
+  # Valid styles are SEGMENTED_10, SEGMENTED_12, SEGMENTED_20, SEGMENTED_6, SOLID
+  style: SOLID
+
+# Prevent that a spawner is changed via eggs in other territories
+factionsSupport: false
+
+# Prevent that a spawner is changed via eggs in other kingdoms
+feudalSupport: false
+
+# Puts more information out on startup
+verboseConfig: false
+
+# Internal stuff, do NOT change unless advised - the plugin might break otherwise
+useReflection: true
+testMCVersion: true
+useMetadata: true
+```
+
+## Commands
+
+Aliases:
+* silkspawners
+* silkspawner
+* ss
+* spawner
+* silk
+* spawnersilk
+* egg
+* eggs
+* eg
+
+| Command                                   | Description                                                  |
+|:-----------------------------------------:|:------------------------------------------------------------:|
+| /ss help                                  | Displays the help menu.                                      |
+| /ss list&#124;all                         | Displays all available creatures.                            |
+| /ss view                                  | Displays information about the viewed spawner.               |
+| /ss reload&#124;rl                        | Reloads the configuration files.                             |
+| /ss change&#124;set <newMob>              | Changes the spawner you are currently holding or viewing at. |
+| /ss give&#124;add <player> <mob> [amount] | Gives a spawner or egg to the player. Amount is optional.    |
 
 ## Permissions
-**Permission support is optional** and off by default. When turned off, the settings shown in parentheses below are used, intended to allow for easy setup with minimal configuration. 
+(Fallback to OPs, if no permissions system is found)
+* Grant either wild card permission for all mobs (use the star [*])
+* or define per mob permissions by using _creature_ and replace it with a real mob name.
+  * spaces will be stripped out of names
 
-For more advanced setup, set *usePermissions: true* in config.yml, and all permission nodes will be set to *false*, allowing for flexible configuration through your permission plugin as desired.
+#### General
+| Permission node          | Default | Description                                                                          |
+|:------------------------:|:-------:|:------------------------------------------------------------------------------------:|
+| silkspawners.*           | false   | Grants access to all other permissions                                               |
+| silkspawners.info        | true    | See informative messages about the spawners as you place and break them              |
+| silkspawners.viewtype    | true    | View the spawner type using /spawner                                                 |
+| silkspawners.reload      | op      | Reload the configs on the fly                                                        |
+| silkspawners.explodedrop | true    | Receive a drop when Spawner explodes via TNT (off by default, see permissionExplode) |
 
-*silkspawners.info* (true) - Allows you to see informative messages about the spawners as you place and break them
+#### Placing spawners
+| Permission node               | Default | Description                           |
+|:-----------------------------:|:-------:|:-------------------------------------:|
+| silkspawners.place.*          | true    | Ability to place all spawners         |
+| silkspawners.place._creature_ | true    | Ability to place a _creature_ spawner |
 
-*silkspawners.silkdrop* (true) - Allows you to use silk touch to acquire mob spawner items
+#### Crafting spawners
+| Permission node               | Default | Description                                        |
+|:-----------------------------:|:-------:|:--------------------------------------------------:|
+| silkspawners.craft.*          | true    | Ability to craft all spawners (if enabled)         |
+| silkspawners.craft._creature_ | true    | Ability to craft a _creature_ spawner (if enabled) |
 
-*silkspawners.destroydrop* (true) - Allows you to destroy mob spawners to acquire mob spawn eggs / iron bars / XP (as configured)
+#### Mining spawners
+| Permission node                     | Default | Description                                                                                               |
+|:-----------------------------------:|:-------:|:---------------------------------------------------------------------------------------------------------:|
+| silkspawners.destroydrop.*          | true    | Allows you to destroy all mob spawners to acquire mob spawn eggs / iron bars / XP (as configured)         |
+| silkspawners.destroydrop._creature_ | true    | Allows you to destroy mob a _creature_ spawner to acquire mob spawn eggs / iron bars / XP (as configured) |
+| silkspawners.silkdrop.*             | true    | Allows you to use silk touch to acquire all mob spawner items                                             |
+| silkspawners.silkdrop._creature_    | true    | Allows you to use silk touch to acquire a _creautre_ mob spawner item                                     |
 
-*silkspawners.viewtype* (true) - Allows you to view the spawner type using /spawner
+#### Changing spawners
+| Permission node                           | Default | Description                                                                      |
+|:-----------------------------------------:|:-------:|:--------------------------------------------------------------------------------:|
+| silkspawners.changetype.*                 | op      | Allows you to change all spawner types using /spawner _creature_                 |
+| silkspawners.changetype._creature_        | op      | Allows you to change a _creature_ spawner type using /spawner _creature_         |
+| silkspawners.changetypewithegg.*          | op      | Allows you to change all spawner types by left-clicking with a spawn egg         |
+| silkspawners.changetypewithegg._creature_ | op      | Allows you to change a _creature_ spawner type by left-clicking with a spawn egg |
 
-*silkspawners.changetype* (op) - Allows you to change the spawner type using /spawner [creature]
+#### Free spawners and eggs
+| Permission node                     | Default | Description                                                                                 |
+|:-----------------------------------:|:-------:|:-------------------------------------------------------------------------------------------:|
+| silkspawners.freeitem.*             | op      | Allows you to get all spawner items in your hand for free using /spawner _creature_         |
+| silkspawners.freeitem._creature_    | op      | Allows you to get a _creature_ spawner item in your hand for free using /spawner _creature_ |
+| silkspawners.freeitemegg.*          | op      | Allows you to get all spawner eggs in your hand for free using /egg _creature_              |
+| silkspawners.freeitemegg._creature_ | op      | Allows you to get a _creature_ spawner egg in your hand for free using /egg _creature_      |
 
-*silkspawners.changetypewithegg* (op) - Allows you to change the spawner type by left-clicking with a spawn egg
+## Credits
+* mushroomhostage for the original SilkSpawners plugin
+* Thermo_Core alias Archarin for the logo
+* Kiracastle for the nice review
+* smsunrato for the review and Indonesian translation
+* Jeroendedoem for the Dutch translation
 
-*silkspawners.freeitem* (op) - Allows you to get spawner items in your hand for free using /spawner [creature]
+## Support
+For support visit the [Bukkit](https://dev.bukkit.org/projects/silkspawners) page or open an [issue](https://github.com/timbru31/SilkSpawners/issues/new)
 
-*silkspawners.freeitemegg* (op) - Allows you to get spawn eggs in your hand for free using /spawner [creature]egg
+## Pull Requests
+Feel free to submit any PRs here. :)  
+Please follow the Sun Coding Guidelines, thanks!
 
-## Technical Details
-SilkSpawners stores the entity ID of creature in two places within the mob spawner item:
+## Usage statistics
 
-* Durability (damage value), if possible.  SilkSpawners does not rely on this field, although it will use it if it is available on newer builds which allow storing data on mob spawner items (see [BUKKIT-329](https://bukkit.atlassian.net/browse/BUKKIT-329)).
+_stats images are returning soon!_
 
-* Enchantment SILK\_TOUCH level
+## Data usage collection of bStats
 
-When a spawner block is broken, a spawner item drops with the appropriate entity ID stored, obtained from the creature spawner tile entity (CraftCreatureSpawner).  When a spawner block is placed, the entity ID is read from the item and the spawner creature type is set (using the CreatureSpawner BlockState). 
+#### Disabling bStats
+The file `./plugins/bStats/config.yml` contains an option to *opt-out*.
 
-*For plugin developers*: if you want to interoperate with SilkSpawners' monster spawner items, use `entityID = (short)item.getEnchantmentLevel(Enchantment.SILK_TOUCH)` or `item.addUnsafeEnchantment(Enchantment.SILK_TOUCH, entityID)` on the `ItemStack`, the enchantment level storing the creature type [Entity ID](http://www.minecraftwiki.net/wiki/Data_values#Entity_IDs).
+#### The following data is **read and sent** to https://bstats.org and can be seen under https://bstats.org/plugin/bukkit/SilkSpawners
+* Your server's randomly generated UUID
+* The amount of players on your server
+* The online mode of your server
+* The bukkit version of your server
+* The java version of your system (e.g. Java 8)
+* The name of your OS (e.g. Windows)
+* The version of your OS
+* The architecture of your OS (e.g. amd64)
+* The system cores of your OS (e.g. 8)
+* bStats-supported plugins
+* Plugin version of bStats-supported plugins
 
-Bukkit provides an [EntityType](http://jd.bukkit.org/apidocs/org/bukkit/entity/EntityType.html) wrapper, but it is implemented using an enum which cannot be easily extended by mods (without using reflection, as they do for the ItemStack wrapper), so SilkSpawners does not use this enum when possible, and instead directly accesses the net.minecraft.server classes if it can. If it fails or if useReflection is false, SilkSpawners will fallback to the EntityType wrapper.
+## Donation
+[![PayPal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif "Donation via PayPal")](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=T9TEV7Q88B9M2)
 
-## Limitations
-SilkSpawners only changes the spawner type, it does not manage the spawning itself; the spawning algorithm remains up to Minecraft. Other plugins offer more control.
-
-If creaturebox is also installed, drops two spawners. Install either SilkSpawners or creaturebox, not both.
-
-Not Enough Items may show all spawners as "Pig", because it does not recognize how SilkSpawners stores the spawner creature type (should be fixed after [BUKKIT-329](https://bukkit.atlassian.net/browse/BUKKIT-329)).
-
-In the inventory window, item description is "Monster Spawner" for all kinds of spawners.  Fixing this requires a client-side mod.
-
-## See Also
-Want to make Silk Touch yet more useful? Also try Pickaxe + Silk Touch II from [EnchantMore](http://dev.bukkit.org/server-mods/enchantmore/).
-
-Other relevant plugins:
-
-* [creaturebox](http://dev.bukkit.org/server-mods/creaturebox/)
-* [MonsterBox](http://dev.bukkit.org/server-mods/monsterbox/)
-* [Mob Spawner Changer](http://forums.bukkit.org/threads/misc-mech-mob-spawner-changer-v0-3-change-what-a-mob-spawner-spawns-1337.26038/)
-* [SilkierTouch](http://dev.bukkit.org/server-mods/silkiertouch/)
-* [ChangeSilkTouch](http://dev.bukkit.org/server-mods/changesilktouch/)
-* [felega.block](http://forums.bukkit.org/threads/multiple-felegas-plugin-pile.54916/)
-* [SuperSimpleSpawners](http://dev.bukkit.org/server-mods/supersimplespawners/)
-* [MobSpawnerEggChanger](http://dev.bukkit.org/server-mods/sec/)
-
-***[Fork me on GitHub](https://github.com/mushroomhostage/SilkSpawners)***
-
+![BitCoin](https://dustplanet.de/wp-content/uploads/2015/01/bitcoin-logo-plain.png "Donation via BitCoins")  
+1NnrRgdy7CfiYN63vKHiypSi3MSctCP55C

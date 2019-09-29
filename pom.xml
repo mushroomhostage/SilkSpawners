@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>de.dustplanet</groupId>
+  <artifactId>SilkSpawners-parent</artifactId>
+  <packaging>pom</packaging>
+  <version>parent</version>
+  <name>SilkSpawners Parent</name>
+  <url>https://dev.bukkit.org/projects/silkspawners/</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <repositories>
+    <repository>
+      <id>dustplanet</id>
+      <url>https://repo.dustplanet.de/artifactory/craftbukkit</url>
+    </repository>
+  </repositories>
+
+  <modules>
+    <module>modules/API</module>
+    <module>modules/v1_7_R1</module>
+    <module>modules/v1_7_R2</module>
+    <module>modules/v1_7_R3</module>
+    <module>modules/v1_7_R4</module>
+    <module>modules/v1_8_R1</module>
+    <module>modules/v1_8_R2</module>
+    <module>modules/v1_8_R3</module>
+    <module>modules/v1_9_R1</module>
+    <module>modules/v1_9_R2</module>
+    <module>modules/v1_10_R1</module>
+    <module>modules/v1_11_R1</module>
+    <module>modules/v1_12_R1</module>
+    <module>modules/v1_13_R1</module>
+    <module>modules/v1_13_R2</module>
+    <module>modules/SilkSpawners</module>
+  </modules>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.1</version>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+          <compilerArgument>-Xlint:all</compilerArgument>
+          <showDeprecation>true</showDeprecation>
+          <showWarnings>true</showWarnings>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

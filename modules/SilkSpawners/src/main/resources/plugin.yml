@@ -1,0 +1,52 @@
+name: SilkSpawners
+author: xGhOsTkiLLeRx
+authors: [mushroomhostage]
+main: de.dustplanet.silkspawners.SilkSpawners
+version: ${project.version}-b${BUILD_NUMBER}
+url: https://dev.bukkit.org/projects/silkspawners
+description: pick up and move monster spawners using silk touch
+api-version: 1.13
+commands:
+  silkspawners:
+    aliases: [silkspawner, ss, spawner, silk, spawnersilk, egg, eg, eggs]
+    description: Command for changing and getting spawners or spawn eggs
+    usage: /<command> help
+permissions:
+  silkspawners.*:
+    children:
+      silkspawners.info: true
+      silkspawners.viewtype: true
+      silkspawners.reload: true
+      silkspawners.explodedrop: true
+      silkspawners.help: true
+      silkspawners.free: true
+      silkspawners.createshop: true
+      silkspawners.destroyshop: true
+      silkspawners.editshop: true
+      silkspawners.use.*: true
+      silkspawners.silkdrop.*: true
+      silkspawners.destroydrop.*: true
+      silkspawners.changetype.*: true
+      silkspawners.changetypewithegg.*: true
+      silkspawners.freeitem.*: true
+      silkspawners.freeitemegg.*: true
+      silkspawners.craft.*: true
+      silkspawners.place.*: true
+    default: false
+  silkspawners.info:
+    description: Allows you to see informative messages about the spawners as you place and break them
+    default: true
+  silkspawners.viewtype:
+    description: Allows you to view the spawner type using /spawner
+    default: true
+  silkspawners.reload:
+    description: Allows you to reload the plugin
+    default: op
+  silkspawners.explodedrop:
+    description: Allows you to receive drops on explosion
+    default: false
+  silkspawners.help:
+    description: Allows you to see the help menu
+    default: true
+softdepend: [WorldGuard, BarAPI, Factions, Feudal]
+loadbefore: [MergedSpawner, ShopGUIPlus]
